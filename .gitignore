@@ -1,0 +1,15 @@
+#
+# BurstLanguage/.gitignore
+#
+*
+!*/
+
+# Allow Markdown files
+!*.md
+!*.markdown
+
+# Allow Git-related files
+!.git*
+
+# Ignore *nix backup files
+*~
