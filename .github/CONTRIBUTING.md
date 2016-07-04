@@ -1,0 +1,1 @@
+Before submitting your contribution, please review our [contribution guidelines](https://docs.google.com/document/d/18Zp-d7L-UR1yk06xnoWeXeeyws8Bt7DMdwyE3VD6rDs/edit?usp=sharing).
