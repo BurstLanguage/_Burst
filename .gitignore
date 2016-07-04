@@ -10,9 +10,8 @@
 
 # Allow make files
 !Makefile
-
-# Allow config files
-!*.cfg
+!*.mk
+!*.makefile
 
 # Allow git-related files
 !.git*
