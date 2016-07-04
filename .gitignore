@@ -4,11 +4,17 @@
 *
 !*/
 
-# Allow Markdown files
+# Allow markdown files
 !*.md
 !*.markdown
 
-# Allow Git-related files
+# Allow make files
+!Makefile
+
+# Allow config files
+!*.cfg
+
+# Allow git-related files
 !.git*
 
 # Ignore *nix backup files
