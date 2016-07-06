@@ -1,4 +1,6 @@
 # Burst
+
+[![Join the chat at https://gitter.im/BurstLanguage/Burst](https://badges.gitter.im/BurstLanguage/Burst.svg)](https://gitter.im/BurstLanguage/Burst?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 *An open-source, interpreted, C-like language, implemented in C*.
 
 ## Links
