@@ -19,6 +19,8 @@ int lexer_create
     (*ppLexer)->pFile     = NULL;
     (*ppLexer)->pFilePath = pFilePath;
     
+    (*ppLexer)->pTokenizer = NULL;
+    
     return BURST_SUCCESS;
 }
 
@@ -36,6 +38,9 @@ int lexer_prepare
     if (NULL == (pLexer->pFile = fopen(pLexer->pFilePath, "r")))
         return BURST_FAIL;
     
+    if (BURST_SUCCESS != tokenizer_create(pLexer->pFile, &pLexer->pTokenizer))
+        return BURST_FAIL;
+    
     return BURST_SUCCESS;
 }
 
@@ -47,8 +52,13 @@ int lexer_run
     if (NULL == pLexer)
         return BURST_FAIL;
     
-    // TODO: Perform tokenization
-    //  ...
+    if (BURST_SUCCESS != tokenizer_run(pLexer->pTokenizer))
+    {
+        printf("An error occurred during tokenization of file at path %s\n",
+            pLexer->pFilePath);
+        
+        return BURST_FAIL;
+    }
     
     // TODO: Perform lexical analysis
     //  ...
@@ -63,6 +73,9 @@ int lexer_destroy
 {
     if (NULL == pLexer)
         return BURST_FAIL;
+    
+    if (NULL != pLexer->pTokenizer)
+        tokenizer_destroy(pLexer->pTokenizer);
     
     if (NULL != pLexer->pFile)
         fclose(pLexer->pFile);

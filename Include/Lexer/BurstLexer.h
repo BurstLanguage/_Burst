@@ -13,11 +13,15 @@
 #include "BurstErrorCodes.h"
 #include "BurstErrorMessages.h"
 
+#include "BurstTokenizer.h"
+
 struct burstLexer;
 struct burstLexer
 {
     FILE *pFile;
     const char *pFilePath;
+    
+    BurstTokenizer *pTokenizer;
 };
 typedef struct burstLexer BurstLexer;
 
