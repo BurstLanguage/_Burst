@@ -1,0 +1,32 @@
+#
+# Burst/.gitignore
+# Used to tell Git what it can and cannot include in our repository.
+#
+# Notes:
+#  If a line starts with a(n) exclamation-mark (!), that tells Git that it can
+#   include that file (or folder) in the repository.
+#
+
+*
+!*/
+
+# C files
+!*.c
+!*.h
+
+# Make files
+!Makefile
+!Makefile.*
+!*.mk
+
+# Documentation files
+!README*
+!CREDITS*
+!AUTHORS*
+!LICENSE*
+
+# Miscellaneous files
+!.git*
+
+# Burst-Language files
+!*.burst
