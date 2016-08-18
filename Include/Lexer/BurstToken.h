@@ -22,7 +22,7 @@ struct burstToken
 {
     int type;
     
-    // I really would like to use a union for these, to save space, but...
+    // TODO (Giga): Wrap these in a union to save space?
     char charValue;
     char *pStringValue;
 };
