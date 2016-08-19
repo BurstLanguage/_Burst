@@ -17,7 +17,8 @@
 #define BURST_NUMBER_TOKEN      0x03
 #define BURST_PUNCTUATION_TOKEN 0x04
 #define BURST_KEYWORD_TOKEN     0x05
-#define BURST_EQUALS_TOKEN      0x06
+#define BURST_IDENTIFIER_TOKEN  0x06
+#define BURST_EQUALS_TOKEN      0x07
 
 struct burstToken;
 struct burstToken

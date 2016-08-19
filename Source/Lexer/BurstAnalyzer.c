@@ -63,8 +63,6 @@ int analyzer_run
                 pCurrentInputToken->charValue
             );
             
-            // strcat(pOutputTokenValue, &pCurrentInputToken->charValue);
-            
             outputTokenValueLength++;
         }
         else
@@ -84,6 +82,18 @@ int analyzer_run
                 if (NULL != (pTokenRegistryResult = token_registry_get_s(
                     pOutputTokenValue, pAnalyzer->pTokenRegistry)))
                     outputTokenType = pTokenRegistryResult->type;
+                else
+                {
+                    switch (outputTokenType)
+                    {
+                        case BURST_LETTER_TOKEN:
+                            outputTokenType = BURST_IDENTIFIER_TOKEN;
+                            break;
+                        
+                        default:
+                            break;
+                    }
+                }
                 
                 token_create_s(strdup(pOutputTokenValue), outputTokenType,
                     &pOutputToken);
