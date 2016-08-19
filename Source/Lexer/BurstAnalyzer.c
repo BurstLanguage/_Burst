@@ -7,6 +7,7 @@
 int analyzer_create
 (
     BurstTokenArray *pInputTokens,
+    BurstTokenRegistry *pTokenRegistry,
     BurstAnalyzer **ppAnalyzer
 )
 {
@@ -16,8 +17,9 @@ int analyzer_create
     if (NULL == ((*ppAnalyzer) = (BurstAnalyzer *) malloc(sizeof(BurstAnalyzer))))
         return BURST_FAIL;
     
-    (*ppAnalyzer)->pInputTokens = pInputTokens;
-    (*ppAnalyzer)->pOutputTokens = NULL;
+    (*ppAnalyzer)->pInputTokens   = pInputTokens;
+    (*ppAnalyzer)->pOutputTokens  = NULL;
+    (*ppAnalyzer)->pTokenRegistry = pTokenRegistry;
     
     token_array_create(&((*ppAnalyzer)->pOutputTokens));
     
@@ -70,6 +72,7 @@ int analyzer_run
             if (BURST_UNKNOWN_TOKEN != outputTokenType &&
                 BURST_WHITESPACE_TOKEN != outputTokenType)
             {
+                BurstToken *pTokenRegistryResult = NULL;
                 BurstToken *pOutputToken = NULL;
                 
                 pOutputTokenValue = (char *) realloc(pOutputTokenValue, (
@@ -78,9 +81,17 @@ int analyzer_run
                 
                 *(pOutputTokenValue + outputTokenValueLength) = '\0';
                 
+                if (NULL != (pTokenRegistryResult = token_registry_get_s(
+                    pOutputTokenValue, pAnalyzer->pTokenRegistry)))
+                    outputTokenType = pTokenRegistryResult->type;
+                
                 token_create_s(strdup(pOutputTokenValue), outputTokenType,
                     &pOutputToken);
                 token_array_add(pOutputToken, pAnalyzer->pOutputTokens);
+                
+                // THIS IS JUST A TEST, BUT I REALLY HOPE IT WORKS!
+                printf("%s - %04x\n", pOutputToken->pStringValue,
+                    pOutputToken->type);
             }
             
             free(pOutputTokenValue);

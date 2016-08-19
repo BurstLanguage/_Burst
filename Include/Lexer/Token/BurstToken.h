@@ -16,6 +16,8 @@
 #define BURST_LETTER_TOKEN      0x02
 #define BURST_NUMBER_TOKEN      0x03
 #define BURST_PUNCTUATION_TOKEN 0x04
+#define BURST_KEYWORD_TOKEN     0x05
+#define BURST_EQUALS_TOKEN      0x06
 
 struct burstToken;
 struct burstToken

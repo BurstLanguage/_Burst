@@ -13,19 +13,23 @@
 #include "BurstErrorMessages.h"
 
 #include "Token/BurstToken.h"
+#include "Token/BurstTokenRegistry.h"
 
 struct burstAnalyzer;
 struct burstAnalyzer
 {
     BurstTokenArray *pInputTokens;
     BurstTokenArray *pOutputTokens;
+    
+    BurstTokenRegistry *pTokenRegistry;
 };
 typedef struct burstAnalyzer BurstAnalyzer;
 
 int analyzer_create
 (
-    BurstTokenArray *pInputTokens, // IN
-    BurstAnalyzer **ppAnalyzer     // OUT
+    BurstTokenArray *pInputTokens,      // IN
+    BurstTokenRegistry *pTokenRegistry, // IN
+    BurstAnalyzer **ppAnalyzer          // OUT
 );
 
 int analyzer_run

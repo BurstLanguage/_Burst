@@ -44,11 +44,14 @@ int lexer_prepare
     if (BURST_SUCCESS != token_registry_create(&pLexer->pTokenRegistry))
         return BURST_FAIL;
     
+    token_registry_add_s("=", BURST_EQUALS_TOKEN, pLexer->pTokenRegistry);
+    token_registry_add_s("int", BURST_KEYWORD_TOKEN, pLexer->pTokenRegistry);
+    
     if (BURST_SUCCESS != tokenizer_create(pLexer->pFile, &pLexer->pTokenizer))
         return BURST_FAIL;
     
     if (BURST_SUCCESS != analyzer_create(pLexer->pTokenizer->pTokens,
-        &pLexer->pAnalyzer))
+        pLexer->pTokenRegistry, &pLexer->pAnalyzer))
         return BURST_FAIL;
     
     return BURST_SUCCESS;
