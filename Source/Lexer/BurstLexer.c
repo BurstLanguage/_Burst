@@ -20,6 +20,7 @@ int lexer_create
     (*ppLexer)->pFilePath = pFilePath;
     
     (*ppLexer)->pTokenizer = NULL;
+    (*ppLexer)->pAnalyzer  = NULL;
     
     return BURST_SUCCESS;
 }
@@ -41,6 +42,10 @@ int lexer_prepare
     if (BURST_SUCCESS != tokenizer_create(pLexer->pFile, &pLexer->pTokenizer))
         return BURST_FAIL;
     
+    if (BURST_SUCCESS != analyzer_create(pLexer->pTokenizer->pTokens,
+        &pLexer->pAnalyzer))
+        return BURST_FAIL;
+    
     return BURST_SUCCESS;
 }
 
@@ -60,8 +65,13 @@ int lexer_run
         return BURST_FAIL;
     }
     
-    // TODO: Perform lexical analysis
-    //  ...
+    if (BURST_SUCCESS != analyzer_run(pLexer->pAnalyzer))
+    {
+        printf("An error occurred during lexical analysis of file at path %s\n",
+            pLexer->pFilePath);
+        
+        return BURST_FAIL;
+    }
     
     return BURST_SUCCESS;
 }
@@ -76,6 +86,9 @@ int lexer_destroy
     
     if (NULL != pLexer->pTokenizer)
         tokenizer_destroy(pLexer->pTokenizer);
+    
+    if (NULL != pLexer->pAnalyzer)
+        analyzer_destroy(pLexer->pAnalyzer);
     
     if (NULL != pLexer->pFile)
         fclose(pLexer->pFile);

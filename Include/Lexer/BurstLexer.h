@@ -14,6 +14,7 @@
 #include "BurstErrorMessages.h"
 
 #include "BurstTokenizer.h"
+#include "BurstAnalyzer.h"
 
 struct burstLexer;
 struct burstLexer
@@ -22,6 +23,7 @@ struct burstLexer
     const char *pFilePath;
     
     BurstTokenizer *pTokenizer;
+    BurstAnalyzer *pAnalyzer;
 };
 typedef struct burstLexer BurstLexer;
 
