@@ -13,6 +13,9 @@
 #include "BurstErrorCodes.h"
 #include "BurstErrorMessages.h"
 
+#include "Token/BurstToken.h"
+#include "Token/BurstTokenRegistry.h"
+
 #include "BurstTokenizer.h"
 #include "BurstAnalyzer.h"
 
@@ -24,6 +27,8 @@ struct burstLexer
     
     BurstTokenizer *pTokenizer;
     BurstAnalyzer *pAnalyzer;
+    
+    BurstTokenRegistry *pTokenRegistry;
 };
 typedef struct burstLexer BurstLexer;
 

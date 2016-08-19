@@ -22,6 +22,8 @@ int lexer_create
     (*ppLexer)->pTokenizer = NULL;
     (*ppLexer)->pAnalyzer  = NULL;
     
+    (*ppLexer)->pTokenRegistry = NULL;
+    
     return BURST_SUCCESS;
 }
 
@@ -37,6 +39,9 @@ int lexer_prepare
         return BURST_FAIL;
     
     if (NULL == (pLexer->pFile = fopen(pLexer->pFilePath, "r")))
+        return BURST_FAIL;
+    
+    if (BURST_SUCCESS != token_registry_create(&pLexer->pTokenRegistry))
         return BURST_FAIL;
     
     if (BURST_SUCCESS != tokenizer_create(pLexer->pFile, &pLexer->pTokenizer))
@@ -83,6 +88,9 @@ int lexer_destroy
 {
     if (NULL == pLexer)
         return BURST_FAIL;
+    
+    if (NULL != pLexer->pTokenRegistry)
+        token_registry_destroy(pLexer->pTokenRegistry);
     
     if (NULL != pLexer->pTokenizer)
         tokenizer_destroy(pLexer->pTokenizer);
