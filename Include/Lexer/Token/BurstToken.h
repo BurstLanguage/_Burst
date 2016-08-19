@@ -1,6 +1,6 @@
 //
 // Burst
-// Include/Lexer/BurstToken.h
+// Include/Lexer/Token/BurstToken.h
 //
 #ifndef __BURST_TOKEN_H__
 #define __BURST_TOKEN_H__

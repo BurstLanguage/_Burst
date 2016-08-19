@@ -1,8 +1,8 @@
 //
 // Burst
-// Source/Lexer/BurstToken.c
+// Source/Lexer/Token/BurstToken.c
 //
-#include "Lexer/BurstToken.h"
+#include "Lexer/Token/BurstToken.h"
 
 int token_create
 (

@@ -12,7 +12,7 @@
 #include "BurstErrorCodes.h"
 #include "BurstErrorMessages.h"
 
-#include "BurstToken.h"
+#include "Token/BurstToken.h"
 
 struct burstAnalyzer;
 struct burstAnalyzer
