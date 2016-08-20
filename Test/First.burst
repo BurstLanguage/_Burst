@@ -1,1 +1,3 @@
-int firstVariable = 42;
+int firstVariable = 40;
+
+firstVariable = firstVariable + 2;

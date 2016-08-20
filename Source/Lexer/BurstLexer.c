@@ -50,9 +50,12 @@ int lexer_prepare
     if (BURST_SUCCESS != tokenizer_create(pLexer->pFile, &pLexer->pTokenizer))
         return BURST_FAIL;
     
-    if (BURST_SUCCESS != analyzer_create(pLexer->pTokenizer->pTokens,
-        pLexer->pTokenRegistry, &pLexer->pAnalyzer))
+    if (BURST_TOKENIZER_OK != tokenizer_setup(pLexer->pTokenizer))
         return BURST_FAIL;
+    
+    // if (BURST_SUCCESS != analyzer_create(pLexer->pTokenizer->pTokens,
+    //     pLexer->pTokenRegistry, &pLexer->pAnalyzer))
+    //     return BURST_FAIL;
     
     return BURST_SUCCESS;
 }

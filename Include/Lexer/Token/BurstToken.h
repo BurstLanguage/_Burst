@@ -14,11 +14,11 @@
 #define BURST_UNKNOWN_TOKEN     0x00
 #define BURST_WHITESPACE_TOKEN  0x01
 #define BURST_LETTER_TOKEN      0x02
-#define BURST_NUMBER_TOKEN      0x03
-#define BURST_PUNCTUATION_TOKEN 0x04
+// #define BURST_NUMBER_TOKEN      0x03
+// #define BURST_PUNCTUATION_TOKEN 0x04
 #define BURST_KEYWORD_TOKEN     0x05
 #define BURST_IDENTIFIER_TOKEN  0x06
-#define BURST_EQUALS_TOKEN      0x07
+// #define BURST_EQUALS_TOKEN      0x07
 
 struct burstToken;
 struct burstToken
