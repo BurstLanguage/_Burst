@@ -42,8 +42,8 @@ typedef struct burstTokenizer BurstTokenizer;
 
 int tokenizer_create
 (
-    FILE *pFile,                        // IN
-    BurstTokenizer **ppTokenizer        // OUT
+    FILE *pFile,                 // IN
+    BurstTokenizer **ppTokenizer // OUT
 );
 
 int tokenizer_setup
@@ -55,12 +55,6 @@ BurstToken *tokenizer_getNext
 (
     BurstTokenizer *pTokenizer // IN
 );
-
-// int tokenizer_getNext
-// (
-//     BurstTokenizer *pTokenizer, // IN
-//     BurstToken **ppToken        // OUT
-// );
 
 int tokenizer_run
 (
