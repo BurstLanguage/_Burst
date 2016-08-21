@@ -11,7 +11,7 @@ int main
 )
 {
     BurstLexer *pFileLexer = NULL;
-    // BurstParser *pFileParser = NULL;
+    BurstParser *pFileParser = NULL;
     
     if (BURST_MIN_ARG_COUNT > argumentCount)
     {
@@ -45,23 +45,24 @@ int main
         
         lexer_run(pFileLexer);
         
-        // if (BURST_SUCCESS != parser_create(pFileLexer->pAnalyzer->pOutputTokens,
-        //     &pFileParser))
-        // {
-        //     lexer_destroy(pFileLexer);
+        if (BURST_SUCCESS != parser_create(pFileLexer->pAnalyzer->pOutputTokens,
+            &pFileParser))
+        {
+            lexer_destroy(pFileLexer);
             
-        //     return BURST_FAIL;
-        // }
+            return BURST_FAIL;
+        }
         
-        // if (BURST_SUCCESS != parser_run(pFileParser))
-        // {
-        //     parser_destroy(pFileParser);
-        //     lexer_destroy(pFileLexer);
+        if (BURST_SUCCESS != parser_run(pFileParser))
+        {
+            parser_destroy(pFileParser);
+            lexer_destroy(pFileLexer);
             
-        //     return BURST_FAIL;
-        // }
+            return BURST_FAIL;
+        }
         
         lexer_destroy(pFileLexer);
+        parser_destroy(pFileParser);
     }
     
     return BURST_SUCCESS;
