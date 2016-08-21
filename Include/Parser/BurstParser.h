@@ -62,4 +62,9 @@ int parser_destroy
     BurstParser *pParser // IN
 );
 
+bool parser_parseVariableDeclaration
+(
+    BurstParser *pParser // IN
+);
+
 #endif

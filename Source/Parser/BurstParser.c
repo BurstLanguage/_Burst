@@ -33,9 +33,21 @@ int parser_run
     if (NULL == pParser->pTokens)
         return BURST_FAIL;
     
-    // Run parser until we tell it to stop
-    while (true)
+    while (NULL != parser_getToken(pParser))
     {
+        int tokenIndexSave = pParser->currentTokenIndex;
+        
+        if (parser_parseVariableDeclaration(pParser))
+        {
+            // TODO
+            
+            continue;
+        }
+        
+        pParser->currentTokenIndex = tokenIndexSave;
+        
+        // TODO
+        
         break;
     }
     
@@ -98,4 +110,33 @@ int parser_destroy
     free(pParser);
     
     return BURST_SUCCESS;
+}
+
+bool parser_parseVariableDeclaration
+(
+    BurstParser *pParser
+)
+{
+    BurstToken *pVariableTypeToken = NULL;
+    BurstToken *pVariableNameToken = NULL;
+    
+    if (NULL == pParser)
+        return false;
+    
+    if (!parser_seesToken(BURST_KEYWORD_TOKEN, pParser))
+        return false;
+    
+    pVariableTypeToken = parser_getToken(pParser);
+    parser_advanceToken(pParser);
+    
+    if (!parser_seesToken(BURST_IDENTIFIER_TOKEN, pParser))
+        return false;
+    
+    pVariableNameToken = parser_getToken(pParser);
+    parser_advanceToken(pParser);
+    
+    printf("[Variable Declaration] Type: %s, Name: %s\n",
+        pVariableTypeToken->pStringValue, pVariableNameToken->pStringValue);
+    
+    return true;
 }
