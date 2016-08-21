@@ -17,6 +17,8 @@
 
 #include "Lexer/Token/BurstToken.h"
 
+#include "AST/BurstAST.h"
+
 #define BURST_PARSER_GOOD 0x00
 #define BURST_PARSER_ERR  0x01
 #define BURST_PARSER_EOF  0x02
