@@ -22,8 +22,6 @@ int lexer_create
     (*ppLexer)->pTokenizer = NULL;
     (*ppLexer)->pAnalyzer  = NULL;
     
-    (*ppLexer)->pTokenRegistry = NULL;
-    
     return BURST_SUCCESS;
 }
 
@@ -41,21 +39,18 @@ int lexer_prepare
     if (NULL == (pLexer->pFile = fopen(pLexer->pFilePath, "r")))
         return BURST_FAIL;
     
-    if (BURST_SUCCESS != token_registry_create(&pLexer->pTokenRegistry))
-        return BURST_FAIL;
-    
-    token_registry_add_s("=", BURST_EQUALS_TOKEN, pLexer->pTokenRegistry);
-    token_registry_add_s("int", BURST_KEYWORD_TOKEN, pLexer->pTokenRegistry);
-    
     if (BURST_SUCCESS != tokenizer_create(pLexer->pFile, &pLexer->pTokenizer))
         return BURST_FAIL;
     
-    if (BURST_TOKENIZER_OK != tokenizer_setup(pLexer->pTokenizer))
+    if (BURST_SUCCESS != tokenizer_setup(pLexer->pTokenizer))
         return BURST_FAIL;
     
-    // if (BURST_SUCCESS != analyzer_create(pLexer->pTokenizer->pTokens,
-    //     pLexer->pTokenRegistry, &pLexer->pAnalyzer))
-    //     return BURST_FAIL;
+    if (BURST_SUCCESS != analyzer_create(pLexer->pTokenizer->pTokens,
+        &pLexer->pAnalyzer))
+        return BURST_FAIL;
+    
+    if (BURST_SUCCESS != analyzer_setup(pLexer->pAnalyzer))
+        return BURST_FAIL;
     
     return BURST_SUCCESS;
 }
@@ -94,9 +89,6 @@ int lexer_destroy
 {
     if (NULL == pLexer)
         return BURST_FAIL;
-    
-    if (NULL != pLexer->pTokenRegistry)
-        token_registry_destroy(pLexer->pTokenRegistry);
     
     if (NULL != pLexer->pTokenizer)
         tokenizer_destroy(pLexer->pTokenizer);

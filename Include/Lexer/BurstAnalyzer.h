@@ -21,15 +21,19 @@ struct burstAnalyzer
     BurstTokenArray *pInputTokens;
     BurstTokenArray *pOutputTokens;
     
-    BurstTokenRegistry *pTokenRegistry;
+    BurstTokenRegistry *pKeywordRegistry;
 };
 typedef struct burstAnalyzer BurstAnalyzer;
 
 int analyzer_create
 (
-    BurstTokenArray *pInputTokens,      // IN
-    BurstTokenRegistry *pTokenRegistry, // IN
-    BurstAnalyzer **ppAnalyzer          // OUT
+    BurstTokenArray *pInputTokens, // IN
+    BurstAnalyzer **ppAnalyzer     // OUT
+);
+
+int analyzer_setup
+(
+    BurstAnalyzer *pAnalyzer // IN
 );
 
 int analyzer_run

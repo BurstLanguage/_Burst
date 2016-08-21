@@ -27,8 +27,6 @@ struct burstLexer
     
     BurstTokenizer *pTokenizer;
     BurstAnalyzer *pAnalyzer;
-    
-    BurstTokenRegistry *pTokenRegistry;
 };
 typedef struct burstLexer BurstLexer;
 

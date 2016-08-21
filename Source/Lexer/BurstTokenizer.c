@@ -36,17 +36,16 @@ int tokenizer_setup
 )
 {
     if (NULL == pTokenizer)
-        return BURST_TOKENIZER_ERR;
+        return BURST_FAIL;
     
-    token_registry_add_c('+', BURST_ADD_TOKEN, pTokenizer->pTokenRegistry);
-    token_registry_add_c('-', BURST_SUBTRACT_TOKEN, pTokenizer->pTokenRegistry);
-    token_registry_add_c('*', BURST_MULTIPLY_TOKEN, pTokenizer->pTokenRegistry);
-    token_registry_add_c('/', BURST_DIVIDE_TOKEN, pTokenizer->pTokenRegistry);
-    token_registry_add_c('=', BURST_EQUALS_TOKEN, pTokenizer->pTokenRegistry);
-    
+    token_registry_add_c('+', BURST_ADD_TOKEN,       pTokenizer->pTokenRegistry);
+    token_registry_add_c('-', BURST_SUBTRACT_TOKEN,  pTokenizer->pTokenRegistry);
+    token_registry_add_c('*', BURST_MULTIPLY_TOKEN,  pTokenizer->pTokenRegistry);
+    token_registry_add_c('/', BURST_DIVIDE_TOKEN,    pTokenizer->pTokenRegistry);
+    token_registry_add_c('=', BURST_EQUALS_TOKEN,    pTokenizer->pTokenRegistry);
     token_registry_add_c(';', BURST_SEMICOLON_TOKEN, pTokenizer->pTokenRegistry);
     
-    return BURST_TOKENIZER_OK;
+    return BURST_SUCCESS;
 }
 
 BurstToken *tokenizer_getNext
@@ -112,18 +111,14 @@ int tokenizer_run
     
     while (NULL != (pCurrentToken = tokenizer_getNext(pTokenizer)))
     {
-        // Make sure we ignore all unknown and whitespace tokens
-        if (BURST_UNKNOWN_TOKEN == pCurrentToken->type ||
-            BURST_WHITESPACE_TOKEN == pCurrentToken->type)
+        // Make sure we ignore all unknown tokens
+        if (BURST_UNKNOWN_TOKEN == pCurrentToken->type)
         {
-            printf("\n");
-            
             token_destroy(pCurrentToken);
             
             continue;
         }
         
-        printf("'%c' - %02x\n", pCurrentToken->charValue, pCurrentToken->type);
         token_array_add(pCurrentToken, pTokenizer->pTokens);
     }
     

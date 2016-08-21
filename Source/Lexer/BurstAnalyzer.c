@@ -7,7 +7,6 @@
 int analyzer_create
 (
     BurstTokenArray *pInputTokens,
-    BurstTokenRegistry *pTokenRegistry,
     BurstAnalyzer **ppAnalyzer
 )
 {
@@ -17,11 +16,25 @@ int analyzer_create
     if (NULL == ((*ppAnalyzer) = (BurstAnalyzer *) malloc(sizeof(BurstAnalyzer))))
         return BURST_FAIL;
     
-    (*ppAnalyzer)->pInputTokens   = pInputTokens;
-    (*ppAnalyzer)->pOutputTokens  = NULL;
-    (*ppAnalyzer)->pTokenRegistry = pTokenRegistry;
+    (*ppAnalyzer)->pInputTokens     = pInputTokens;
+    (*ppAnalyzer)->pOutputTokens    = NULL;
+    (*ppAnalyzer)->pKeywordRegistry = NULL;
     
     token_array_create(&((*ppAnalyzer)->pOutputTokens));
+    token_registry_create(&((*ppAnalyzer)->pKeywordRegistry));
+    
+    return BURST_SUCCESS;
+}
+
+int analyzer_setup
+(
+    BurstAnalyzer *pAnalyzer
+)
+{
+    if (NULL == pAnalyzer)
+        return BURST_FAIL;
+    
+    token_registry_add_s("int", BURST_KEYWORD_TOKEN, pAnalyzer->pKeywordRegistry);
     
     return BURST_SUCCESS;
 }
@@ -80,7 +93,7 @@ int analyzer_run
                 *(pOutputTokenValue + outputTokenValueLength) = '\0';
                 
                 if (NULL != (pTokenRegistryResult = token_registry_get_s(
-                    pOutputTokenValue, pAnalyzer->pTokenRegistry)))
+                    pOutputTokenValue, pAnalyzer->pKeywordRegistry)))
                     outputTokenType = pTokenRegistryResult->type;
                 else
                 {
@@ -132,6 +145,9 @@ int analyzer_destroy
     
     if (NULL != pAnalyzer->pOutputTokens)
         token_array_destroy(pAnalyzer->pOutputTokens);
+    
+    if (NULL != pAnalyzer->pKeywordRegistry)
+        token_registry_destroy(pAnalyzer->pKeywordRegistry);
     
     free(pAnalyzer);
     
