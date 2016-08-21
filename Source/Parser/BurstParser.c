@@ -33,13 +33,58 @@ int parser_run
     if (NULL == pParser->pTokens)
         return BURST_FAIL;
     
-    // TODO: Parse
-    
-    /*
-    if (parser_parse_var_decl(pParser))
-     */
+    // Run parser until we tell it to stop
+    while (true)
+    {
+        break;
+    }
     
     return BURST_SUCCESS;
+}
+
+BurstToken *parser_getToken
+(
+    BurstParser *pParser
+)
+{
+    if (NULL == pParser)
+        return NULL;
+    
+    if (NULL == pParser->pTokens)
+        return NULL;
+    
+    return token_array_at(pParser->currentTokenIndex, pParser->pTokens);
+}
+
+bool parser_seesToken
+(
+    int tokenType,
+    BurstParser *pParser
+)
+{
+    BurstToken *pToken = NULL;
+    
+    if (NULL == pParser)
+        return false;
+    
+    if (NULL == pParser->pTokens)
+        return false;
+    
+    if (NULL == (pToken = parser_getToken(pParser)))
+        return false;
+    
+    return tokenType == pToken->type;
+}
+
+void parser_advanceToken
+(
+    BurstParser *pParser
+)
+{
+    if (NULL == pParser)
+        return;
+    
+    pParser->currentTokenIndex++;
 }
 
 int parser_destroy
