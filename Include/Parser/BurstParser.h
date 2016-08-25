@@ -18,6 +18,7 @@
 #include "Lexer/Token/BurstToken.h"
 
 #include "AST/BurstAST.h"
+#include "AST/Nodes/BurstASTNode.h"
 
 #define BURST_PARSER_GOOD 0x00
 #define BURST_PARSER_ERR  0x01
@@ -28,6 +29,7 @@ struct burstParser
 {
     int currentTokenIndex;
     
+    BurstAST *pAST;
     BurstTokenArray *pTokens;
 };
 typedef struct burstParser BurstParser;

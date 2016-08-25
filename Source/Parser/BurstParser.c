@@ -18,6 +18,9 @@ int parser_create
     
     (*ppParser)->currentTokenIndex = 0x0;
     (*ppParser)->pTokens = pTokens;
+    (*ppParser)->pAST = NULL;
+    
+    ast_create(&(*ppParser)->pAST);
     
     return BURST_SUCCESS;
 }
@@ -106,6 +109,9 @@ int parser_destroy
 {
     if (NULL == pParser)
         return BURST_FAIL;
+    
+    if (NULL != pParser->pAST)
+        ast_destroy(pParser->pAST);
     
     free(pParser);
     
