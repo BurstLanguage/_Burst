@@ -45,10 +45,12 @@ int parser_run
         if (!parser_parseVariableDeclaration(pParser, &pCurrentASTNode))
             pParser->currentTokenIndex = tokenIndexSave;
         
-        assert(BURST_SUCCESS == ast_add(pCurrentASTNode, pParser->pAST));
+        if (NULL != pCurrentASTNode)
+            assert(BURST_SUCCESS == ast_add(pCurrentASTNode, pParser->pAST));
+        else
+            break;
         
-        // TODO: Remove this...
-        break;
+        // break;
     }
     
     return BURST_SUCCESS;
@@ -121,7 +123,6 @@ bool parser_parseVariableDeclaration
     BurstASTNode **ppASTNode
 )
 {
-    // BurstASTNode *pVariableValueASTNode = NULL;
     BurstVariableDeclarationNode *pVariableDeclaration = NULL;
     
     BurstToken *pVariableTypeToken = NULL;
@@ -153,16 +154,20 @@ bool parser_parseVariableDeclaration
     
     if (parser_seesToken(BURST_EQUALS_TOKEN, pParser))
     {
-        int tokenIndexSave = pParser->currentTokenIndex;
+        parser_advanceToken(pParser);
         
         if (!parser_parseValueExpression(pParser,
             &pVariableDeclaration->pValueExpressionNode))
-            pParser->currentTokenIndex = tokenIndexSave;
+            PARSER_ERROR("Expected value after '='!");
     }
     
     assert(BURST_SUCCESS == ast_node_create(
         BURST_VARIABLE_DECLARATION_NODE, pVariableDeclaration, ppASTNode
     ));
+    
+    // Skip line-ending semicolon, if it exists.
+    if (parser_seesToken(BURST_SEMICOLON_TOKEN, pParser))
+        parser_advanceToken(pParser);
     
     return true;
 }
@@ -173,6 +178,9 @@ bool parser_parseValueExpression
     BurstASTNode **ppASTNode
 )
 {
+    BurstASTNode *pValueNode = NULL;
+    BurstValueExpressionNode *pValueExpressionNode = NULL;
+    
     if (NULL == pParser)
         return false;
     
@@ -182,21 +190,28 @@ bool parser_parseValueExpression
     // TODO: Support more than just number-literals
     if (parser_seesToken(BURST_NUMBER_TOKEN, pParser))
     {
-        BurstToken *pLiteralExpressionToken = NULL;
+        BurstToken *pLiteralExpression = NULL;
         BurstLiteralExpressionNode *pLiteralExpressionNode = NULL;
         
-        pLiteralExpressionToken = parser_getToken(pParser);
+        pLiteralExpression = parser_getToken(pParser);
         parser_advanceToken(pParser);
         
         assert(BURST_SUCCESS == literal_expression_node_create(
-            pLiteralExpressionToken->pStringValue, &pLiteralExpressionNode
+            pLiteralExpression->pStringValue, &pLiteralExpressionNode
         ));
         assert(BURST_SUCCESS == ast_node_create(
-            BURST_LITERAL_EXPRESSION_NODE, pLiteralExpressionToken, ppASTNode
+            BURST_LITERAL_EXPRESSION_NODE, pLiteralExpressionNode, &pValueNode
+        ));
+        
+        assert(BURST_SUCCESS == value_expression_node_create(
+            BURST_LITERAL_EXPRESSION_NODE, pValueNode, &pValueExpressionNode
+        ));
+        assert(BURST_SUCCESS == ast_node_create(
+            BURST_VALUE_EXPRESSION_NODE, pValueExpressionNode, ppASTNode
         ));
         
         return true;
     }
     
-    return true;
+    return false;
 }
