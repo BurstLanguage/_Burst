@@ -24,6 +24,11 @@
 #define BURST_PARSER_ERR  0x01
 #define BURST_PARSER_EOF  0x02
 
+#define PARSER_ERROR(msg) { \
+    if (msg) printf("%s\n", msg); \
+    exit(BURST_PARSER_ERR); \
+}
+
 struct burstParser;
 struct burstParser
 {
