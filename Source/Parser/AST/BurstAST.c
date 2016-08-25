@@ -30,7 +30,13 @@ int ast_add
     if (NULL == pAST || NULL == pASTNode)
         return BURST_FAIL;
     
-    // TODO
+    pAST->ppASTNodes = (BurstASTNode **) realloc(
+        pAST->ppASTNodes, (sizeof(BurstASTNode *) * (pAST->countASTNodes + 0x1))
+    );
+    
+    *(pAST->ppASTNodes + pAST->countASTNodes) = pASTNode;
+    
+    pAST->countASTNodes++;
     
     return BURST_SUCCESS;
 }
