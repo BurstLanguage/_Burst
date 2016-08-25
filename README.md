@@ -1,2 +1,2 @@
 # Burst
-*An open-source, interpreted, C-like language*.
+*An open-source, C-like language*.
