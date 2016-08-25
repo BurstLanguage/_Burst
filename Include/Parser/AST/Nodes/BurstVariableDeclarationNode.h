@@ -20,10 +20,9 @@
 struct burstVariableDeclarationNode;
 struct burstVariableDeclarationNode
 {
-    char *pTypeString; // Variable Type
-    char *pNameString; // Variable Name
-    
-    // TODO: Variable Value Node
+    char *pTypeString;                  // Variable Type
+    char *pNameString;                  // Variable Name
+    BurstASTNode *pValueExpressionNode; // Variable Value Expression
     
     int (*destroy)
     (

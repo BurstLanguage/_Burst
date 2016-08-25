@@ -25,6 +25,7 @@ int variable_declaration_node_create
     
     (*ppNode)->pTypeString = pVariableType;
     (*ppNode)->pNameString = pVariableName;
+    (*ppNode)->pValueExpressionNode = NULL;
     
     (*ppNode)->destroy = variable_declaration_node_destroy;
     
@@ -44,6 +45,9 @@ int variable_declaration_node_destroy
     
     // if (NULL != pNode->pNameString)
     //     free(pNode->pNameString);
+    
+    if (NULL != pNode->pValueExpressionNode)
+        ast_node_destroy(pNode->pValueExpressionNode);
     
     free(pNode);
     

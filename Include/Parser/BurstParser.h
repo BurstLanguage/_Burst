@@ -68,7 +68,14 @@ int parser_destroy
 
 bool parser_parseVariableDeclaration
 (
-    BurstParser *pParser // IN
+    BurstParser *pParser,    // IN
+    BurstASTNode **ppASTNode // OUT
+);
+
+bool parser_parseValueExpression
+(
+    BurstParser *pParser,    // IN
+    BurstASTNode **ppASTNode // OUT
 );
 
 #endif

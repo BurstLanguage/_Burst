@@ -40,13 +40,14 @@ int parser_run
     {
         int tokenIndexSave = pParser->currentTokenIndex;
         
-        if (parser_parseVariableDeclaration(pParser))
-            continue;
+        BurstASTNode *pCurrentASTNode = NULL;
         
-        pParser->currentTokenIndex = tokenIndexSave;
+        if (!parser_parseVariableDeclaration(pParser, &pCurrentASTNode))
+            pParser->currentTokenIndex = tokenIndexSave;
         
-        // TODO
+        assert(BURST_SUCCESS == ast_add(pCurrentASTNode, pParser->pAST));
         
+        // TODO: Remove this...
         break;
     }
     
@@ -116,16 +117,20 @@ int parser_destroy
 
 bool parser_parseVariableDeclaration
 (
-    BurstParser *pParser
+    BurstParser *pParser,
+    BurstASTNode **ppASTNode
 )
 {
-    BurstASTNode *pASTNode = NULL;
+    // BurstASTNode *pVariableValueASTNode = NULL;
     BurstVariableDeclarationNode *pVariableDeclaration = NULL;
     
     BurstToken *pVariableTypeToken = NULL;
     BurstToken *pVariableNameToken = NULL;
     
     if (NULL == pParser)
+        return false;
+    
+    if (NULL != (*ppASTNode))
         return false;
     
     if (!parser_seesToken(BURST_KEYWORD_TOKEN, pParser))
@@ -140,17 +145,58 @@ bool parser_parseVariableDeclaration
     pVariableNameToken = parser_getToken(pParser);
     parser_advanceToken(pParser);
     
-    // TODO: Variable Values
-    
     assert(BURST_SUCCESS == variable_declaration_node_create(
         pVariableTypeToken->pStringValue,
         pVariableNameToken->pStringValue,
         &pVariableDeclaration
     ));
+    
+    if (parser_seesToken(BURST_EQUALS_TOKEN, pParser))
+    {
+        int tokenIndexSave = pParser->currentTokenIndex;
+        
+        if (!parser_parseValueExpression(pParser,
+            &pVariableDeclaration->pValueExpressionNode))
+            pParser->currentTokenIndex = tokenIndexSave;
+    }
+    
     assert(BURST_SUCCESS == ast_node_create(
-        BURST_VARIABLE_DECLARATION_NODE, pVariableDeclaration, &pASTNode
+        BURST_VARIABLE_DECLARATION_NODE, pVariableDeclaration, ppASTNode
     ));
-    assert(BURST_SUCCESS == ast_add(pASTNode, pParser->pAST));
+    
+    return true;
+}
+
+bool parser_parseValueExpression
+(
+    BurstParser *pParser,
+    BurstASTNode **ppASTNode
+)
+{
+    if (NULL == pParser)
+        return false;
+    
+    if (NULL != (*ppASTNode))
+        return false;
+    
+    // TODO: Support more than just number-literals
+    if (parser_seesToken(BURST_NUMBER_TOKEN, pParser))
+    {
+        BurstToken *pLiteralExpressionToken = NULL;
+        BurstLiteralExpressionNode *pLiteralExpressionNode = NULL;
+        
+        pLiteralExpressionToken = parser_getToken(pParser);
+        parser_advanceToken(pParser);
+        
+        assert(BURST_SUCCESS == literal_expression_node_create(
+            pLiteralExpressionToken->pStringValue, &pLiteralExpressionNode
+        ));
+        assert(BURST_SUCCESS == ast_node_create(
+            BURST_LITERAL_EXPRESSION_NODE, pLiteralExpressionToken, ppASTNode
+        ));
+        
+        return true;
+    }
     
     return true;
 }
