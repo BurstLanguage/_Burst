@@ -22,7 +22,24 @@ Contributions are to be written using the English language. Use of text-speak,
 leet-speak, and other "slang-languages", should be avoided.
 
 ## Repository Contributions
-...
+### Bug Reports
+If you've encountered a problem with Burst or any of its related projects,
+please open an issue **on the repository for the project that you encountered a
+problem with**.
+
+When submitting bug reports to any of Burst's repositories, please include
+detailed information about the problem you encountered, as well as any steps we
+could use to reproduce the problem.
+
+### Pull Requests
+Whenever you get ready to make a change to a Burst project, please do your best
+to **create a new branch for (each of) your change**. Once you're done making a
+change, open a pull request, and request to merge your change's branch, with the
+original project's main branch (usually "master").
+
+When opening your pull request, please include a detailed overview of your
+change (or changes). This makes it easier for the Burst team to review
+everything.
 
 ## Code Contributions
 ...
