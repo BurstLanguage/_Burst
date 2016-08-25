@@ -41,11 +41,7 @@ int parser_run
         int tokenIndexSave = pParser->currentTokenIndex;
         
         if (parser_parseVariableDeclaration(pParser))
-        {
-            // TODO
-            
             continue;
-        }
         
         pParser->currentTokenIndex = tokenIndexSave;
         
@@ -123,6 +119,9 @@ bool parser_parseVariableDeclaration
     BurstParser *pParser
 )
 {
+    BurstASTNode *pASTNode = NULL;
+    BurstVariableDeclarationNode *pVariableDeclaration = NULL;
+    
     BurstToken *pVariableTypeToken = NULL;
     BurstToken *pVariableNameToken = NULL;
     
@@ -141,8 +140,17 @@ bool parser_parseVariableDeclaration
     pVariableNameToken = parser_getToken(pParser);
     parser_advanceToken(pParser);
     
-    printf("[Variable Declaration] Type: %s, Name: %s\n",
-        pVariableTypeToken->pStringValue, pVariableNameToken->pStringValue);
+    // TODO: Variable Values
+    
+    assert(BURST_SUCCESS == variable_declaration_node_create(
+        pVariableTypeToken->pStringValue,
+        pVariableNameToken->pStringValue,
+        &pVariableDeclaration
+    ));
+    assert(BURST_SUCCESS == ast_node_create(
+        BURST_VARIABLE_DECLARATION_NODE, pVariableDeclaration, &pASTNode
+    ));
+    assert(BURST_SUCCESS == ast_add(pASTNode, pParser->pAST));
     
     return true;
 }

@@ -39,11 +39,11 @@ int variable_declaration_node_destroy
     if (NULL == pNode)
         return BURST_FAIL;
     
-    if (NULL != pNode->pTypeString)
-        free(pNode->pTypeString);
+    // if (NULL != pNode->pTypeString)
+    //     free(pNode->pTypeString);
     
-    if (NULL != pNode->pNameString)
-        free(pNode->pNameString);
+    // if (NULL != pNode->pNameString)
+    //     free(pNode->pNameString);
     
     free(pNode);
     
