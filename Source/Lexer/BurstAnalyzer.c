@@ -111,10 +111,6 @@ int analyzer_run
                 token_create_s(strdup(pOutputTokenValue), outputTokenType,
                     &pOutputToken);
                 token_array_add(pOutputToken, pAnalyzer->pOutputTokens);
-                
-                // THIS IS JUST A TEST, BUT I REALLY HOPE IT WORKS!
-                printf("%s - %04x\n", pOutputToken->pStringValue,
-                    pOutputToken->type);
             }
             
             free(pOutputTokenValue);
@@ -127,6 +123,21 @@ int analyzer_run
         }
         
         pLastInputToken = pCurrentInputToken;
+    }
+    
+    // Make sure last token in file gets added to token array.
+    if (BURST_UNKNOWN_TOKEN != outputTokenType)
+    {
+        BurstToken *pLastToken = NULL;
+        
+        pOutputTokenValue = (char *) realloc(pOutputTokenValue, (
+            sizeof(char) * (outputTokenValueLength + 0x1)
+        ));
+        
+        *(pOutputTokenValue + outputTokenValueLength) = '\0';
+        
+        token_create_s(strdup(pOutputTokenValue), outputTokenType, &pLastToken);
+        token_array_add(pLastToken, pAnalyzer->pOutputTokens);
     }
     
     if (NULL != pOutputTokenValue)

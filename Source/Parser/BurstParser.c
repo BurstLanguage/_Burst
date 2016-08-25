@@ -49,8 +49,6 @@ int parser_run
             assert(BURST_SUCCESS == ast_add(pCurrentASTNode, pParser->pAST));
         else
             break;
-        
-        // break;
     }
     
     return BURST_SUCCESS;
