@@ -16,14 +16,29 @@
 #include "BurstErrorMessages.h"
 
 #include "Nodes/BurstASTNode.h"
-#include "Nodes/BurstVariableDeclarationNode.h"
 
 struct burstAST;
 struct burstAST
 {
     int countASTNodes;
-    BurstASTNode *pASTNodes;
+    BurstASTNode **ppASTNodes;
 };
 typedef struct burstAST BurstAST;
+
+int ast_create
+(
+    BurstAST **ppAST // OUT
+);
+
+int ast_add
+(
+    BurstASTNode *pASTNode, // IN
+    BurstAST *pAST          // IN
+);
+
+int ast_destroy
+(
+    BurstAST *pAST // IN
+);
 
 #endif

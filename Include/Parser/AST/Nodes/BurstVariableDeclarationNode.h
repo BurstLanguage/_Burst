@@ -15,12 +15,33 @@
 #include "BurstErrorCodes.h"
 #include "BurstErrorMessages.h"
 
+#include "BurstASTNode.h"
+
 struct burstVariableDeclarationNode;
 struct burstVariableDeclarationNode
 {
-    char *pType; // Variable Type
-    char *pName; // Variable Name
+    char *pTypeString; // Variable Type
+    char *pNameString; // Variable Name
+    
+    // TODO: Variable Value Node
+    
+    int (*destroy)
+    (
+        struct burstVariableDeclarationNode *pNode
+    );
 };
 typedef struct burstVariableDeclarationNode BurstVariableDeclarationNode;
+
+int variable_declaration_node_create
+(
+    char *pVariableType,                  // IN
+    char *pVariableName,                  // IN
+    BurstVariableDeclarationNode **ppNode // OUT
+);
+
+int variable_declaration_node_destroy
+(
+    BurstVariableDeclarationNode *pNode // IN
+);
 
 #endif

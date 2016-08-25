@@ -15,6 +15,8 @@
 #include "BurstErrorCodes.h"
 #include "BurstErrorMessages.h"
 
+#include "BurstVariableDeclarationNode.h"
+
 #define BURST_VARIABLE_DECLARATION_NODE 0x00
 
 struct burstASTNode;
@@ -24,5 +26,17 @@ struct burstASTNode
     void *pNode;
 };
 typedef struct burstASTNode BurstASTNode;
+
+int ast_node_create
+(
+    int astNodeType,         // IN
+    void *pNode,             // IN
+    BurstASTNode **ppASTNode // OUT
+);
+
+int ast_node_destroy
+(
+    BurstASTNode *pASTNode // IN
+);
 
 #endif
