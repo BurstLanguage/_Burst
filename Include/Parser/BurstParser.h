@@ -83,4 +83,10 @@ bool parser_parseValueExpression
     BurstASTNode **ppASTNode // OUT
 );
 
+bool parser_parseArithmeticExpression
+(
+    BurstParser *pParser,    // IN
+    BurstASTNode **ppASTNode // OUT
+);
+
 #endif

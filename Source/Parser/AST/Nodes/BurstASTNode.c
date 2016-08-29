@@ -55,7 +55,13 @@ int ast_node_destroy
                     ((BurstLiteralExpressionNode *) pASTNode->pNode)
                 );
                 break;
-                
+            
+            case BURST_ARITHMETIC_EXPRESSION_NODE:
+                ((BurstArithmeticExpressionNode *) pASTNode->pNode)->destroy(
+                    ((BurstArithmeticExpressionNode *) pASTNode->pNode)
+                );
+                break;
+            
             default:
                 break;
         }

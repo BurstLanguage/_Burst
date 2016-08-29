@@ -23,6 +23,8 @@
 #define BURST_SUBTRACT_TOKEN    0x09
 #define BURST_MULTIPLY_TOKEN    0x0A
 #define BURST_DIVIDE_TOKEN      0x0B
+#define BURST_LBRACKET_TOKEN    0x0C
+#define BURST_RBRACKET_TOKEN    0x0D
 
 struct burstToken;
 struct burstToken

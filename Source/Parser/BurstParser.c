@@ -210,6 +210,83 @@ bool parser_parseValueExpression
         
         return true;
     }
+    else if (parser_seesToken(BURST_LBRACKET_TOKEN, pParser))
+    {
+        if (!parser_parseArithmeticExpression(pParser, &pValueNode))
+            return false;
+        
+        assert(BURST_SUCCESS == value_expression_node_create(
+            BURST_ARITHMETIC_EXPRESSION_NODE, pValueNode, &pValueExpressionNode
+        ));
+        assert(BURST_SUCCESS == ast_node_create(
+            BURST_VALUE_EXPRESSION_NODE, pValueExpressionNode, ppASTNode
+        ));
+        
+        return true;
+    }
     
     return false;
+}
+
+bool parser_parseArithmeticExpression
+(
+    BurstParser *pParser,
+    BurstASTNode **ppASTNode
+)
+{
+    BurstArithmeticExpressionNode *pArithmeticExpression = NULL;
+    
+    BurstASTNode *pLeftSideNode  = NULL;
+    BurstASTNode *pRightSideNode = NULL;
+    
+    char *pOperator = NULL;
+    
+    if (NULL == pParser)
+        return false;
+    
+    if (NULL != (*ppASTNode))
+        return false;
+    
+    if (!parser_seesToken(BURST_LBRACKET_TOKEN, pParser))
+        return false;
+    
+    // Advance past '['
+    parser_advanceToken(pParser);
+    
+    if (!parser_parseValueExpression(pParser, &pLeftSideNode))
+        return false;
+    
+    if (!parser_seesToken(BURST_ADD_TOKEN, pParser) &&
+        !parser_seesToken(BURST_SUBTRACT_TOKEN, pParser) &&
+        !parser_seesToken(BURST_MULTIPLY_TOKEN, pParser) &&
+        !parser_seesToken(BURST_DIVIDE_TOKEN, pParser))
+        return false;
+    
+    pOperator = (parser_getToken(pParser)->pStringValue);
+    parser_advanceToken(pParser);
+    
+    if (!parser_parseValueExpression(pParser, &pRightSideNode))
+        return false;
+    
+    if (!parser_seesToken(BURST_RBRACKET_TOKEN, pParser))
+        PARSER_ERROR("Expected closing bracket after arithmetic expression!");
+    
+    // Advance past ']'
+    parser_advanceToken(pParser);
+    
+    assert(BURST_SUCCESS == arithmetic_expression_node_create(
+        pLeftSideNode,
+        pRightSideNode,
+        pOperator,
+        &pArithmeticExpression
+    ));
+    assert(BURST_SUCCESS == ast_node_create(
+        BURST_ARITHMETIC_EXPRESSION_NODE, pArithmeticExpression, ppASTNode
+    ));
+    
+    // Skip line-ending semicolon, if it exists.
+    if (parser_seesToken(BURST_SEMICOLON_TOKEN, pParser))
+        parser_advanceToken(pParser);
+    
+    return true;
 }

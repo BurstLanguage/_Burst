@@ -44,6 +44,8 @@ int tokenizer_setup
     token_registry_add_c('/', BURST_DIVIDE_TOKEN,    pTokenizer->pTokenRegistry);
     token_registry_add_c('=', BURST_EQUALS_TOKEN,    pTokenizer->pTokenRegistry);
     token_registry_add_c(';', BURST_SEMICOLON_TOKEN, pTokenizer->pTokenRegistry);
+    token_registry_add_c('[', BURST_LBRACKET_TOKEN,  pTokenizer->pTokenRegistry);
+    token_registry_add_c(']', BURST_RBRACKET_TOKEN,  pTokenizer->pTokenRegistry);
     
     return BURST_SUCCESS;
 }

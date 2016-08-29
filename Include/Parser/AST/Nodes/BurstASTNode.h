@@ -15,9 +15,10 @@
 #include "BurstErrorCodes.h"
 #include "BurstErrorMessages.h"
 
-#define BURST_VARIABLE_DECLARATION_NODE 0x00
-#define BURST_VALUE_EXPRESSION_NODE     0x01
-#define BURST_LITERAL_EXPRESSION_NODE   0x02
+#define BURST_VARIABLE_DECLARATION_NODE  0x00
+#define BURST_VALUE_EXPRESSION_NODE      0x01
+#define BURST_LITERAL_EXPRESSION_NODE    0x02
+#define BURST_ARITHMETIC_EXPRESSION_NODE 0x03
 
 struct burstASTNode;
 struct burstASTNode
@@ -33,6 +34,7 @@ typedef struct burstASTNode BurstASTNode;
 #include "BurstVariableDeclarationNode.h"
 #include "BurstValueExpressionNode.h"
 #include "BurstLiteralExpressionNode.h"
+#include "BurstArithmeticExpressionNode.h"
 
 int ast_node_create
 (
