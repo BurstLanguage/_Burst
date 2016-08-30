@@ -8,7 +8,7 @@ int simpleExpression = [2 + 2];
 int advancedExpression = [ [1 + 1] + [1 + 1] ];
 int myNumber = secondVariable;
 
-$ int add(int first, int second)
-$ {
-$     return [first + second];
-$ }
+fn add(int first, int second) : int
+{
+    return [first + second];
+}
