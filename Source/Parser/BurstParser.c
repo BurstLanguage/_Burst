@@ -38,14 +38,30 @@ int parser_run
     
     while (NULL != parser_getToken(pParser))
     {
+        bool bParseSuccess = false;
         int tokenIndexSave = pParser->currentTokenIndex;
         
         BurstASTNode *pCurrentASTNode = NULL;
         
-        if (!parser_parseVariableDeclaration(pParser, &pCurrentASTNode))
-            pParser->currentTokenIndex = tokenIndexSave;
+        if (!bParseSuccess && parser_parseVariableDeclaration(pParser,
+            &pCurrentASTNode))
+            bParseSuccess = true;
+        else
+            if (!bParseSuccess)
+                pParser->currentTokenIndex = tokenIndexSave;
         
-        if (NULL != pCurrentASTNode)
+        if (!bParseSuccess && parser_parseFunctionDeclaration(pParser,
+            &pCurrentASTNode))
+            bParseSuccess = true;
+        else
+            if (!bParseSuccess)
+                pParser->currentTokenIndex = tokenIndexSave;
+        
+        // if (!parser_parseVariableDeclaration(pParser, &pCurrentASTNode) ||
+        //     !parser_parseFunctionDeclaration(pParser, &pCurrentASTNode))
+        //     pParser->currentTokenIndex = tokenIndexSave;
+        
+        if (bParseSuccess && NULL != pCurrentASTNode)
             assert(BURST_SUCCESS == ast_add(pCurrentASTNode, pParser->pAST));
         else
             break;
@@ -132,7 +148,7 @@ bool parser_parseVariableDeclaration
     if (NULL != (*ppASTNode))
         return false;
     
-    if (!parser_seesToken(BURST_KEYWORD_TOKEN, pParser))
+    if (!parser_seesToken(BURST_TYPE_TOKEN, pParser))
         return false;
     
     pVariableTypeToken = parser_getToken(pParser);
@@ -176,6 +192,11 @@ bool parser_parseFunctionDeclaration
     BurstASTNode **ppASTNode
 )
 {
+    BurstToken *pFunctionReturnTypeToken = NULL;
+    BurstToken *pFunctionIdentifierToken = NULL;
+    
+    // BurstFunctionDeclarationNode *pFunctionDeclaration = NULL;
+    
     if (NULL == pParser)
         return false;
     
@@ -184,7 +205,65 @@ bool parser_parseFunctionDeclaration
     
     // TODO: BurstFunctionDeclarationNode
     
-    // KEYWORD IDENTIFIER (<KEYWORD IDENTIFIER>) { ... }
+    if (!parser_seesToken(BURST_KEYWORD_TOKEN, pParser))
+        return false;
+    
+    // pFunctionReturnTypeToken = parser_getToken(pParser);
+    parser_advanceToken(pParser);
+    
+    if (!parser_seesToken(BURST_IDENTIFIER_TOKEN, pParser))
+        return false;
+    
+    pFunctionIdentifierToken = parser_getToken(pParser);
+    parser_advanceToken(pParser);
+    
+    if (!parser_seesToken(BURST_LPAREN_TOKEN, pParser))
+        return false;
+    
+    // Advance past '('
+    parser_advanceToken(pParser);
+    
+    while (!parser_seesToken(BURST_RPAREN_TOKEN, pParser))
+    {
+        // TODO: Capture function's argument list
+        
+        parser_advanceToken(pParser);
+    }
+    
+    // Advance past ')'
+    parser_advanceToken(pParser);
+    
+    if (!parser_seesToken(BURST_COLON_TOKEN, pParser))
+        return false;
+    
+    // Advance past ':'
+    parser_advanceToken(pParser);
+    
+    if (!parser_seesToken(BURST_TYPE_TOKEN, pParser))
+        return false;
+    
+    pFunctionReturnTypeToken = parser_getToken(pParser);
+    parser_advanceToken(pParser);
+    
+    if (!parser_seesToken(BURST_LBRACE_TOKEN, pParser))
+        return false;
+    
+    // Advance past '{'
+    parser_advanceToken(pParser);
+    
+    while (!parser_seesToken(BURST_RBRACE_TOKEN, pParser))
+    {
+        // TODO: Parse function body
+        
+        parser_advanceToken(pParser);
+    }
+    
+    // Advance past '}'
+    parser_advanceToken(pParser);
+    
+    printf("Function - Return Type: %s, Name: %s\n",
+        pFunctionReturnTypeToken->pStringValue,
+        pFunctionIdentifierToken->pStringValue);
     
     return false;
 }

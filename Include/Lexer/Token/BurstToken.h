@@ -31,6 +31,8 @@
 #define BURST_RPAREN_TOKEN      0x11
 #define BURST_LBRACE_TOKEN      0x12
 #define BURST_RBRACE_TOKEN      0x13
+#define BURST_TYPE_TOKEN        0x14
+#define BURST_COLON_TOKEN       0x15
 
 struct burstToken;
 struct burstToken
