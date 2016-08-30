@@ -62,6 +62,12 @@ int ast_node_destroy
                 );
                 break;
             
+            case BURST_REFERENCE_EXPRESSION_NODE:
+                ((BurstReferenceExpressionNode *) pASTNode->pNode)->destroy(
+                    ((BurstReferenceExpressionNode *) pASTNode->pNode)
+                );
+                break;
+            
             default:
                 break;
         }

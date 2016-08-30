@@ -207,6 +207,17 @@ bool parser_parseValueExpression
         
         return true;
     }
+    else if (parser_parseReferenceExpression(pParser, &pValueNode))
+    {
+        assert(BURST_SUCCESS == value_expression_node_create(
+            BURST_REFERENCE_EXPRESSION_NODE, pValueNode, &pValueExpressionNode
+        ));
+        assert(BURST_SUCCESS == ast_node_create(
+            BURST_VALUE_EXPRESSION_NODE, pValueExpressionNode, ppASTNode
+        ));
+        
+        return true;
+    }
     
     return false;
 }
@@ -241,6 +252,10 @@ bool parser_parseLiteralExpression
         
         return true;
     }
+    
+    // Skip line-ending semicolon, if it exists.
+    if (parser_seesToken(BURST_SEMICOLON_TOKEN, pParser))
+        parser_advanceToken(pParser);
     
     return false;
 }
@@ -299,6 +314,41 @@ bool parser_parseArithmeticExpression
     ));
     assert(BURST_SUCCESS == ast_node_create(
         BURST_ARITHMETIC_EXPRESSION_NODE, pArithmeticExpression, ppASTNode
+    ));
+    
+    // Skip line-ending semicolon, if it exists.
+    if (parser_seesToken(BURST_SEMICOLON_TOKEN, pParser))
+        parser_advanceToken(pParser);
+    
+    return true;
+}
+
+bool parser_parseReferenceExpression
+(
+    BurstParser *pParser,
+    BurstASTNode **ppASTNode
+)
+{
+    BurstToken *pIdentifierToken = NULL;
+    BurstReferenceExpressionNode *pReferenceExpression = NULL;
+    
+    if (NULL == pParser)
+        return false;
+    
+    if (NULL != (*ppASTNode))
+        return false;
+    
+    if (!parser_seesToken(BURST_IDENTIFIER_TOKEN, pParser))
+        return false;
+    
+    pIdentifierToken = parser_getToken(pParser);
+    parser_advanceToken(pParser);
+    
+    assert(BURST_SUCCESS == reference_expression_node_create(
+        pIdentifierToken->pStringValue, &pReferenceExpression
+    ));
+    assert(BURST_SUCCESS == ast_node_create(
+        BURST_REFERENCE_EXPRESSION_NODE, pReferenceExpression, ppASTNode
     ));
     
     // Skip line-ending semicolon, if it exists.

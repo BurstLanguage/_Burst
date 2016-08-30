@@ -151,6 +151,8 @@ int tokenizer_run
         
         if (!pTokenizer->pFlags->bInComment)
             token_array_add(pCurrentToken, pTokenizer->pTokens);
+        else
+            token_destroy(pCurrentToken);
     }
     
     return BURST_SUCCESS;
