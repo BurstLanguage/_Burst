@@ -1,5 +1,8 @@
 int firstVariable = 42;
 int secondVariable = 2112;
 
+$ This is a comment, taken from the (now abandoned) "Glang" project.
+$ By the way, don't do a Google search for "Glang".
+
 int simpleExpression = [2 + 2];
 int advancedExpression = [ [1 + 1] + [1 + 1] ];

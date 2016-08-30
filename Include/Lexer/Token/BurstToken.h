@@ -25,6 +25,7 @@
 #define BURST_DIVIDE_TOKEN      0x0B
 #define BURST_LBRACKET_TOKEN    0x0C
 #define BURST_RBRACKET_TOKEN    0x0D
+#define BURST_COMMENT_TOKEN     0x0E
 
 struct burstToken;
 struct burstToken

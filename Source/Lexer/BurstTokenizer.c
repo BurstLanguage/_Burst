@@ -27,6 +27,14 @@ int tokenizer_create
     token_array_create(&(*ppTokenizer)->pTokens);
     token_registry_create(&(*ppTokenizer)->pTokenRegistry);
     
+    (*ppTokenizer)->pFlags = (BurstTokenizerFlags *) malloc(sizeof(
+        BurstTokenizerFlags));
+    
+    if (NULL == (*ppTokenizer)->pFlags)
+        return BURST_FAIL;
+    
+    (*ppTokenizer)->pFlags->bInComment = false;
+    
     return BURST_SUCCESS;
 }
 
@@ -46,6 +54,7 @@ int tokenizer_setup
     token_registry_add_c(';', BURST_SEMICOLON_TOKEN, pTokenizer->pTokenRegistry);
     token_registry_add_c('[', BURST_LBRACKET_TOKEN,  pTokenizer->pTokenRegistry);
     token_registry_add_c(']', BURST_RBRACKET_TOKEN,  pTokenizer->pTokenRegistry);
+    token_registry_add_c('$', BURST_COMMENT_TOKEN,   pTokenizer->pTokenRegistry);
     
     return BURST_SUCCESS;
 }
@@ -121,7 +130,27 @@ int tokenizer_run
             continue;
         }
         
-        token_array_add(pCurrentToken, pTokenizer->pTokens);
+        if (BURST_COMMENT_TOKEN == pCurrentToken->type)
+        {
+            token_destroy(pCurrentToken);
+            
+            pTokenizer->pFlags->bInComment = true;
+            
+            continue;
+        }
+        
+        if ((BURST_WHITESPACE_TOKEN == pCurrentToken->type) &&
+            ('\n' == pCurrentToken->charValue) &&
+            (pTokenizer->pFlags->bInComment))
+        {
+            pTokenizer->pFlags->bInComment = false;
+            token_destroy(pCurrentToken);
+            
+            continue;
+        }
+        
+        if (!pTokenizer->pFlags->bInComment)
+            token_array_add(pCurrentToken, pTokenizer->pTokens);
     }
     
     return BURST_SUCCESS;
@@ -140,6 +169,9 @@ int tokenizer_destroy
     
     if (NULL != pTokenizer->pTokenRegistry)
         token_registry_destroy(pTokenizer->pTokenRegistry);
+    
+    if (NULL != pTokenizer->pFlags)
+        free(pTokenizer->pFlags);
     
     free(pTokenizer);
     
