@@ -185,22 +185,8 @@ bool parser_parseValueExpression
     if (NULL != (*ppASTNode))
         return false;
     
-    // TODO: Support more than just number-literals
-    if (parser_seesToken(BURST_NUMBER_TOKEN, pParser))
+    if (parser_parseLiteralExpression(pParser, &pValueNode))
     {
-        BurstToken *pLiteralExpression = NULL;
-        BurstLiteralExpressionNode *pLiteralExpressionNode = NULL;
-        
-        pLiteralExpression = parser_getToken(pParser);
-        parser_advanceToken(pParser);
-        
-        assert(BURST_SUCCESS == literal_expression_node_create(
-            pLiteralExpression->pStringValue, &pLiteralExpressionNode
-        ));
-        assert(BURST_SUCCESS == ast_node_create(
-            BURST_LITERAL_EXPRESSION_NODE, pLiteralExpressionNode, &pValueNode
-        ));
-        
         assert(BURST_SUCCESS == value_expression_node_create(
             BURST_LITERAL_EXPRESSION_NODE, pValueNode, &pValueExpressionNode
         ));
@@ -210,16 +196,47 @@ bool parser_parseValueExpression
         
         return true;
     }
-    else if (parser_seesToken(BURST_LBRACKET_TOKEN, pParser))
+    else if (parser_parseArithmeticExpression(pParser, &pValueNode))
     {
-        if (!parser_parseArithmeticExpression(pParser, &pValueNode))
-            return false;
-        
         assert(BURST_SUCCESS == value_expression_node_create(
             BURST_ARITHMETIC_EXPRESSION_NODE, pValueNode, &pValueExpressionNode
         ));
         assert(BURST_SUCCESS == ast_node_create(
             BURST_VALUE_EXPRESSION_NODE, pValueExpressionNode, ppASTNode
+        ));
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool parser_parseLiteralExpression
+(
+    BurstParser *pParser,
+    BurstASTNode **ppASTNode
+)
+{
+    BurstToken *pLiteralExpressionToken = NULL;
+    BurstLiteralExpressionNode *pLiteralExpressionNode = NULL;
+    
+    if (NULL == pParser)
+        return false;
+    
+    if (NULL != (*ppASTNode))
+        return false;
+    
+    // TODO: Support more than just number literals
+    if (parser_seesToken(BURST_NUMBER_TOKEN, pParser))
+    {
+        pLiteralExpressionToken = parser_getToken(pParser);
+        parser_advanceToken(pParser);
+        
+        assert(BURST_SUCCESS == literal_expression_node_create(
+            pLiteralExpressionToken->pStringValue, &pLiteralExpressionNode
+        ));
+        assert(BURST_SUCCESS == ast_node_create(
+            BURST_LITERAL_EXPRESSION_NODE, pLiteralExpressionNode, ppASTNode
         ));
         
         return true;
