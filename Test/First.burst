@@ -2,3 +2,4 @@ int firstVariable = 42;
 int secondVariable = 2112;
 
 int simpleExpression = [2 + 2];
+int advancedExpression = [ [1 + 1] + [1 + 1] ];
