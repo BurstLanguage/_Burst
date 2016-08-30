@@ -20,6 +20,7 @@
 #define BURST_LITERAL_EXPRESSION_NODE    0x02
 #define BURST_ARITHMETIC_EXPRESSION_NODE 0x03
 #define BURST_REFERENCE_EXPRESSION_NODE  0x04
+#define BURST_FUNCTION_DECLARATION_NODE  0x05
 
 struct burstASTNode;
 struct burstASTNode
@@ -37,6 +38,7 @@ typedef struct burstASTNode BurstASTNode;
 #include "BurstLiteralExpressionNode.h"
 #include "BurstArithmeticExpressionNode.h"
 #include "BurstReferenceExpressionNode.h"
+#include "BurstFunctionDeclarationNode.h"
 
 int ast_node_create
 (

@@ -77,6 +77,12 @@ bool parser_parseVariableDeclaration
     BurstASTNode **ppASTNode // OUT
 );
 
+bool parser_parseFunctionDeclaration
+(
+    BurstParser *pParser,    // IN
+    BurstASTNode **ppASTNode // OUT
+);
+
 bool parser_parseValueExpression
 (
     BurstParser *pParser,    // IN

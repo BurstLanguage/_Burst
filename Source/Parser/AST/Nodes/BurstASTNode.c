@@ -68,6 +68,12 @@ int ast_node_destroy
                 );
                 break;
             
+            case BURST_FUNCTION_DECLARATION_NODE:
+                ((BurstFunctionDeclarationNode *) pASTNode->pNode)->destroy(
+                    ((BurstFunctionDeclarationNode *) pASTNode->pNode)
+                );
+                break;
+            
             default:
                 break;
         }

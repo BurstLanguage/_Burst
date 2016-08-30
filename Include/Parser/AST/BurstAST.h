@@ -15,15 +15,16 @@
 #include "BurstErrorCodes.h"
 #include "BurstErrorMessages.h"
 
+struct burstAST;
+typedef struct burstAST BurstAST;
+
 #include "Nodes/BurstASTNode.h"
 
-struct burstAST;
 struct burstAST
 {
     int countASTNodes;
     BurstASTNode **ppASTNodes;
 };
-typedef struct burstAST BurstAST;
 
 int ast_create
 (

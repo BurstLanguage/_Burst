@@ -34,7 +34,9 @@ int analyzer_setup
     if (NULL == pAnalyzer)
         return BURST_FAIL;
     
-    token_registry_add_s("int", BURST_KEYWORD_TOKEN, pAnalyzer->pKeywordRegistry);
+    token_registry_add_s("int",    BURST_KEYWORD_TOKEN, pAnalyzer->pKeywordRegistry);
+    token_registry_add_s("void",   BURST_KEYWORD_TOKEN, pAnalyzer->pKeywordRegistry);
+    token_registry_add_s("return", BURST_KEYWORD_TOKEN, pAnalyzer->pKeywordRegistry);
     
     return BURST_SUCCESS;
 }

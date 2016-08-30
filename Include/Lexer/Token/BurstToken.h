@@ -26,6 +26,11 @@
 #define BURST_LBRACKET_TOKEN    0x0C
 #define BURST_RBRACKET_TOKEN    0x0D
 #define BURST_COMMENT_TOKEN     0x0E
+#define BURST_COMMA_TOKEN       0x0F
+#define BURST_LPAREN_TOKEN      0x10
+#define BURST_RPAREN_TOKEN      0x11
+#define BURST_LBRACE_TOKEN      0x12
+#define BURST_RBRACE_TOKEN      0x13
 
 struct burstToken;
 struct burstToken

@@ -55,6 +55,11 @@ int tokenizer_setup
     token_registry_add_c('[', BURST_LBRACKET_TOKEN,  pTokenizer->pTokenRegistry);
     token_registry_add_c(']', BURST_RBRACKET_TOKEN,  pTokenizer->pTokenRegistry);
     token_registry_add_c('$', BURST_COMMENT_TOKEN,   pTokenizer->pTokenRegistry);
+    token_registry_add_c(',', BURST_COMMA_TOKEN,     pTokenizer->pTokenRegistry);
+    token_registry_add_c('(', BURST_LPAREN_TOKEN,    pTokenizer->pTokenRegistry);
+    token_registry_add_c(')', BURST_RPAREN_TOKEN,    pTokenizer->pTokenRegistry);
+    token_registry_add_c('{', BURST_LBRACE_TOKEN,    pTokenizer->pTokenRegistry);
+    token_registry_add_c('}', BURST_RBRACE_TOKEN,    pTokenizer->pTokenRegistry);
     
     return BURST_SUCCESS;
 }

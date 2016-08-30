@@ -170,6 +170,25 @@ bool parser_parseVariableDeclaration
     return true;
 }
 
+bool parser_parseFunctionDeclaration
+(
+    BurstParser *pParser,
+    BurstASTNode **ppASTNode
+)
+{
+    if (NULL == pParser)
+        return false;
+    
+    if (NULL != (*ppASTNode))
+        return false;
+    
+    // TODO: BurstFunctionDeclarationNode
+    
+    // KEYWORD IDENTIFIER (<KEYWORD IDENTIFIER>) { ... }
+    
+    return false;
+}
+
 bool parser_parseValueExpression
 (
     BurstParser *pParser,
