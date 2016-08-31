@@ -129,6 +129,35 @@ int parser_destroy
     return BURST_SUCCESS;
 }
 
+bool parser_parseBlock
+(
+    BurstParser *pParser,    // IN
+    BurstASTNode **ppASTNode // OUT
+)
+{
+    if (NULL == pParser)
+        return false;
+    
+    if (NULL != (*ppASTNode))
+        return false;
+    
+    if (!parser_seesToken(BURST_LBRACE_TOKEN, pParser))
+        return false;
+    
+    // Advance past '{'
+    parser_advanceToken(pParser);
+    
+    // TODO...
+    
+    if (!parser_seesToken(BURST_RBRACE_TOKEN, pParser))
+        return false;
+    
+    // Advance past '}'
+    parser_advanceToken(pParser);
+    
+    return false;
+}
+
 bool parser_parseVariableDeclaration
 (
     BurstParser *pParser,
@@ -243,21 +272,7 @@ bool parser_parseFunctionDeclaration
     pFunctionReturnTypeToken = parser_getToken(pParser);
     parser_advanceToken(pParser);
     
-    if (!parser_seesToken(BURST_LBRACE_TOKEN, pParser))
-        return false;
-    
-    // Advance past '{'
-    parser_advanceToken(pParser);
-    
-    while (!parser_seesToken(BURST_RBRACE_TOKEN, pParser))
-    {
-        // TODO: Parse function body
-        
-        parser_advanceToken(pParser);
-    }
-    
-    // Advance past '}'
-    parser_advanceToken(pParser);
+    // TODO: Parse function block
     
     printf("Function - Return Type: %s, Name: %s\n",
         pFunctionReturnTypeToken->pStringValue,

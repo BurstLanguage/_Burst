@@ -18,7 +18,7 @@
 #include "BurstASTNode.h"
 
 struct burstVariableDeclarationNode;
-struct burstVariableDeclarationNode
+typedef struct burstVariableDeclarationNode
 {
     char *pTypeString;                  // Variable Type
     char *pNameString;                  // Variable Name
@@ -28,8 +28,7 @@ struct burstVariableDeclarationNode
     (
         struct burstVariableDeclarationNode *pNode
     );
-};
-typedef struct burstVariableDeclarationNode BurstVariableDeclarationNode;
+} BurstVariableDeclarationNode;
 
 int variable_declaration_node_create
 (

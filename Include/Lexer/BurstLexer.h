@@ -20,15 +20,14 @@
 #include "BurstAnalyzer.h"
 
 struct burstLexer;
-struct burstLexer
+typedef struct burstLexer
 {
     FILE *pFile;
     const char *pFilePath;
     
     BurstTokenizer *pTokenizer;
     BurstAnalyzer *pAnalyzer;
-};
-typedef struct burstLexer BurstLexer;
+} BurstLexer;
 
 int lexer_create
 (

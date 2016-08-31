@@ -16,14 +16,13 @@
 #include "Token/BurstTokenRegistry.h"
 
 struct burstAnalyzer;
-struct burstAnalyzer
+typedef struct burstAnalyzer
 {
     BurstTokenArray *pInputTokens;
     BurstTokenArray *pOutputTokens;
     
     BurstTokenRegistry *pKeywordRegistry;
-};
-typedef struct burstAnalyzer BurstAnalyzer;
+} BurstAnalyzer;
 
 int analyzer_create
 (

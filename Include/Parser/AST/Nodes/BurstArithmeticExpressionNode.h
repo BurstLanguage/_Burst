@@ -18,7 +18,7 @@
 #include "BurstASTNode.h"
 
 struct burstArithmeticExpressionNode;
-struct burstArithmeticExpressionNode
+typedef struct burstArithmeticExpressionNode
 {
     BurstASTNode *pLeftSide;
     BurstASTNode *pRightSide;
@@ -29,8 +29,7 @@ struct burstArithmeticExpressionNode
     (
         struct burstArithmeticExpressionNode *pNode
     );
-};
-typedef struct burstArithmeticExpressionNode BurstArithmeticExpressionNode;
+} BurstArithmeticExpressionNode;
 
 int arithmetic_expression_node_create
 (

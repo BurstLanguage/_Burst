@@ -30,14 +30,13 @@
 }
 
 struct burstParser;
-struct burstParser
+typedef struct burstParser
 {
     int currentTokenIndex;
     
     BurstAST *pAST;
     BurstTokenArray *pTokens;
-};
-typedef struct burstParser BurstParser;
+} BurstParser;
 
 int parser_create
 (
@@ -69,6 +68,12 @@ void parser_advanceToken
 int parser_destroy
 (
     BurstParser *pParser // IN
+);
+
+bool parser_parseBlock
+(
+    BurstParser *pParser,    // IN
+    BurstASTNode **ppASTNode // OUT
 );
 
 bool parser_parseVariableDeclaration

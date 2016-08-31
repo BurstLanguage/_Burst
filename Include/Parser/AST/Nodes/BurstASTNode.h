@@ -23,12 +23,11 @@
 #define BURST_FUNCTION_DECLARATION_NODE  0x05
 
 struct burstASTNode;
-struct burstASTNode
+typedef struct burstASTNode
 {
     int nodeType;
     void *pNode;
-};
-typedef struct burstASTNode BurstASTNode;
+} BurstASTNode;
 
 // These are placed below the definition of the 'BurstASTNode' type, because
 //  there's a chance that one of the following files might require the use of

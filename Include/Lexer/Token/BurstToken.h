@@ -35,15 +35,14 @@
 #define BURST_COLON_TOKEN       0x15
 
 struct burstToken;
-struct burstToken
+typedef struct burstToken
 {
     int type;
     
     // TODO (Giga): Wrap these in a union to save space?
     char charValue;
     char *pStringValue;
-};
-typedef struct burstToken BurstToken;
+} BurstToken;
 
 int token_create
 (
@@ -71,12 +70,11 @@ int token_destroy
 );
 
 struct burstTokenArray;
-struct burstTokenArray
+typedef struct burstTokenArray
 {
     int tokenCount;
     BurstToken **ppTokens;
-};
-typedef struct burstTokenArray BurstTokenArray;
+} BurstTokenArray;
 
 int token_array_create
 (

@@ -19,19 +19,19 @@
 #include "BurstASTNode.h"
 
 struct burstFunctionDeclarationNode;
-struct burstFunctionDeclarationNode
+typedef struct burstFunctionDeclarationNode
 {
     char *pReturnType;
     char *pIdentifier;
     
-    BurstAST *pBodyAST;
+    BurstAST *pArgs;
+    BurstAST *pBody;
     
     int (*destroy)
     (
         struct burstFunctionDeclarationNode *pNode
     );
-};
-typedef struct burstFunctionDeclarationNode BurstFunctionDeclarationNode;
+} BurstFunctionDeclarationNode;
 
 int function_declaration_node_create
 (

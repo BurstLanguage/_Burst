@@ -18,7 +18,7 @@
 #include "BurstASTNode.h"
 
 struct burstValueExpressionNode;
-struct burstValueExpressionNode
+typedef struct burstValueExpressionNode
 {
     int valueType;
     BurstASTNode *pValueNode;
@@ -27,8 +27,7 @@ struct burstValueExpressionNode
     (
         struct burstValueExpressionNode *pNode
     );
-};
-typedef struct burstValueExpressionNode BurstValueExpressionNode;
+} BurstValueExpressionNode;
 
 int value_expression_node_create
 (

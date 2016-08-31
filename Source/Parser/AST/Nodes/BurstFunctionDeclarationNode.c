@@ -26,7 +26,8 @@ int function_declaration_node_create
     (*ppNode)->pReturnType = pFunctionReturnType;
     (*ppNode)->pIdentifier = pFunctionIdentifier;
     
-    ast_create(&(*ppNode)->pBodyAST);
+    ast_create(&(*ppNode)->pArgs);
+    ast_create(&(*ppNode)->pBody);
     
     (*ppNode)->destroy = function_declaration_node_destroy;
     
@@ -41,8 +42,11 @@ int function_declaration_node_destroy
     if (NULL == pNode)
         return BURST_FAIL;
     
-    if (NULL != pNode->pBodyAST)
-        ast_destroy(pNode->pBodyAST);
+    if (NULL != pNode->pArgs)
+        ast_destroy(pNode->pArgs);
+    
+    if (NULL != pNode->pBody)
+        ast_destroy(pNode->pBody);
     
     free(pNode);
     

@@ -18,14 +18,13 @@
 #include "Token/BurstTokenRegistry.h"
 
 struct burstTokenizerFlags;
-struct burstTokenizerFlags
+typedef struct burstTokenizerFlags
 {
     bool bInComment;
-};
-typedef struct burstTokenizerFlags BurstTokenizerFlags;
+} BurstTokenizerFlags;
 
 struct burstTokenizer;
-struct burstTokenizer
+typedef struct burstTokenizer
 {
     FILE *pFile;
     
@@ -33,8 +32,7 @@ struct burstTokenizer
     BurstTokenRegistry *pTokenRegistry;
     
     BurstTokenizerFlags *pFlags;
-};
-typedef struct burstTokenizer BurstTokenizer;
+} BurstTokenizer;
 
 int tokenizer_create
 (

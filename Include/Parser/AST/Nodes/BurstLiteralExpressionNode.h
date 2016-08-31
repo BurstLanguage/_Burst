@@ -18,7 +18,7 @@
 #include "BurstASTNode.h"
 
 struct burstLiteralExpressionNode;
-struct burstLiteralExpressionNode
+typedef struct burstLiteralExpressionNode
 {
     // TODO: Value Type
     
@@ -28,8 +28,7 @@ struct burstLiteralExpressionNode
     (
         struct burstLiteralExpressionNode *pNode
     );
-};
-typedef struct burstLiteralExpressionNode BurstLiteralExpressionNode;
+} BurstLiteralExpressionNode;
 
 int literal_expression_node_create
 (

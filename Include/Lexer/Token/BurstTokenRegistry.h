@@ -15,11 +15,10 @@
 #include "BurstToken.h"
 
 struct burstTokenRegistry;
-struct burstTokenRegistry
+typedef struct burstTokenRegistry
 {
     BurstTokenArray *pRegisteredTokens;
-};
-typedef struct burstTokenRegistry BurstTokenRegistry;
+} BurstTokenRegistry;
 
 int token_registry_create
 (

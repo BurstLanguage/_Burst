@@ -18,7 +18,7 @@
 #include "BurstASTNode.h"
 
 struct burstReferenceExpressionNode;
-struct burstReferenceExpressionNode
+typedef struct burstReferenceExpressionNode
 {
     char *pIdentifier;
     
@@ -26,8 +26,7 @@ struct burstReferenceExpressionNode
     (
         struct burstReferenceExpressionNode *pNode
     );
-};
-typedef struct burstReferenceExpressionNode BurstReferenceExpressionNode;
+} BurstReferenceExpressionNode;
 
 int reference_expression_node_create
 (
