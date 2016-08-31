@@ -31,3 +31,6 @@
 
 # Burst-Language files
 !*.burst
+
+# Ignore *nix backup files
+*~
