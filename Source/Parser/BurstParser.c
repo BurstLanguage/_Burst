@@ -46,15 +46,13 @@ int parser_run
         if (!bParseSuccess && parser_parseVariableDeclaration(pParser,
             &pCurrentASTNode))
             bParseSuccess = true;
-        else
-            if (!bParseSuccess)
+        else if (!bParseSuccess)
                 pParser->currentTokenIndex = tokenIndexSave;
         
         if (!bParseSuccess && parser_parseFunctionDeclaration(pParser,
             &pCurrentASTNode))
             bParseSuccess = true;
-        else
-            if (!bParseSuccess)
+        else if (!bParseSuccess)
                 pParser->currentTokenIndex = tokenIndexSave;
         
         // if (!parser_parseVariableDeclaration(pParser, &pCurrentASTNode) ||
