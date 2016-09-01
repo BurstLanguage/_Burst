@@ -10,8 +10,8 @@
 #include "BurstErrorCodes.h"
 #include "BurstErrorMessages.h"
 
-#include "Lexer/BurstLexer.h"
-#include "Parser/BurstParser.h"
+#include "Frontend/Lexer/BurstLexer.h"
+#include "Frontend/Parser/BurstParser.h"
 
 #define BURST_MIN_ARG_COUNT 0x2
 #define BURST_MAX_ARG_COUNT 0xA
