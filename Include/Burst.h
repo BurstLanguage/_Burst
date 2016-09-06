@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 
+#include "BurstCommons.h"
 #include "BurstErrorCodes.h"
 #include "BurstErrorMessages.h"
 

@@ -11,6 +11,7 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "BurstCommons.h"
 #include "BurstErrorCodes.h"
 #include "BurstErrorMessages.h"
 

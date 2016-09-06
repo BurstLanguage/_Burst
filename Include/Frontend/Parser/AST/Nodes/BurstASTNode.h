@@ -12,6 +12,7 @@
 
 #include <assert.h>
 
+#include "BurstCommons.h"
 #include "BurstErrorCodes.h"
 #include "BurstErrorMessages.h"
 
