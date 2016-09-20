@@ -19,7 +19,7 @@ SOURCE_FILES := $(shell find ${_SRC} -type f -name "*.c")
 OBJECT_FILES := $(patsubst ${_SRC}/%.c, ${_OBJ}/%.o, ${SOURCE_FILES})
 
 CC := gcc
-CC_FLAGS := -Wall -Werror -ggdb -I${_INC}
+CC_FLAGS := -Wall -Werror -ggdb -std=gnu99 -I${_INC}
 
 VAL := valgrind
 VAL_FLAGS := --leak-check=yes --track-origins=yes
