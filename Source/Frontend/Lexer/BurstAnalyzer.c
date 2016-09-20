@@ -48,7 +48,6 @@ int analyzer_run
     BurstAnalyzer *pAnalyzer
 )
 {
-    BurstToken *pLastInputToken = NULL;
     BurstToken *pCurrentInputToken = NULL;
     
     int outputTokenType = BURST_UNKNOWN_TOKEN;
@@ -125,8 +124,6 @@ int analyzer_run
             outputTokenValueLength = 0x1;
             outputTokenType = pCurrentInputToken->type;
         }
-        
-        pLastInputToken = pCurrentInputToken;
     }
     
     // Make sure last token in file gets added to token array.
