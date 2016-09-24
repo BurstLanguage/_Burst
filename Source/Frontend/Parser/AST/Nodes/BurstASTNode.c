@@ -6,7 +6,7 @@
 
 int ast_node_create
 (
-    int astNodeType,
+    int nodeType,
     void *pNode,
     BurstASTNode **ppASTNode
 )
@@ -20,7 +20,7 @@ int ast_node_create
     if (NULL == ((*ppASTNode) = (BurstASTNode *) malloc(sizeof(BurstASTNode))))
         return BURST_FAIL;
     
-    (*ppASTNode)->nodeType = astNodeType;
+    (*ppASTNode)->nodeType = nodeType;
     (*ppASTNode)->pNode    = pNode;
     
     return BURST_SUCCESS;
@@ -38,44 +38,41 @@ int ast_node_destroy
     {
         switch (pASTNode->nodeType)
         {
-            case BURST_VARIABLE_DECLARATION_NODE:
-                ((BurstVariableDeclarationNode *) pASTNode->pNode)->destroy(
-                    ((BurstVariableDeclarationNode *) pASTNode->pNode)
+            case BURST_AST_GENERIC_NODE:
+            {
+                // If, for some odd reason, the "instance" of the 'BurstASTNode'
+                //  struct that was passed to us, was used to store another
+                //  "instance" of the 'BurstASTNode' struct, we'll call ourself
+                //  again.
+                ast_node_destroy(
+                    (BurstASTNode *) pASTNode->pNode
                 );
+                
                 break;
+            }
             
-            case BURST_VALUE_EXPRESSION_NODE:
-                ((BurstValueExpressionNode *) pASTNode->pNode)->destroy(
-                    ((BurstValueExpressionNode *) pASTNode->pNode)
+            case BURST_AST_LITERAL_EXPRESSION_NODE:
+            {
+                literal_expression_node_destroy(
+                    (BurstLiteralExpressionNode *) pASTNode->pNode
                 );
+                
                 break;
-            
-            case BURST_LITERAL_EXPRESSION_NODE:
-                ((BurstLiteralExpressionNode *) pASTNode->pNode)->destroy(
-                    ((BurstLiteralExpressionNode *) pASTNode->pNode)
-                );
-                break;
-            
-            case BURST_ARITHMETIC_EXPRESSION_NODE:
-                ((BurstArithmeticExpressionNode *) pASTNode->pNode)->destroy(
-                    ((BurstArithmeticExpressionNode *) pASTNode->pNode)
-                );
-                break;
-            
-            case BURST_REFERENCE_EXPRESSION_NODE:
-                ((BurstReferenceExpressionNode *) pASTNode->pNode)->destroy(
-                    ((BurstReferenceExpressionNode *) pASTNode->pNode)
-                );
-                break;
-            
-            case BURST_FUNCTION_DECLARATION_NODE:
-                ((BurstFunctionDeclarationNode *) pASTNode->pNode)->destroy(
-                    ((BurstFunctionDeclarationNode *) pASTNode->pNode)
-                );
-                break;
+            }
             
             default:
+            {
+                // If we make it to this point, we apparently don't have any
+                //  idea what type of AST node we're currently trying to
+                //  destroy.
+                //
+                // As a result of this, we're going to perform a basic
+                //  'free'. This may or may not (probably the latter) free all
+                //  of the memory used for this node.
+                free(pASTNode->pNode);
+                
                 break;
+            }
         }
     }
     

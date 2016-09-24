@@ -16,12 +16,12 @@ int literal_expression_node_create
     (*ppNode) = (BurstLiteralExpressionNode *) malloc(sizeof(
         BurstLiteralExpressionNode));
     
+    // Error allocating memory for node
+    // TODO (Giga): Come up with a better way to handle this.
     if (NULL == (*ppNode))
         return BURST_FAIL;
     
     (*ppNode)->pValueString = pExpressionValue;
-    
-    (*ppNode)->destroy = literal_expression_node_destroy;
     
     return BURST_SUCCESS;
 }
