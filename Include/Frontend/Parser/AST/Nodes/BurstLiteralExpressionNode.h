@@ -10,8 +10,6 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include <assert.h>
-
 #include "BurstCommons.h"
 #include "BurstErrorCodes.h"
 #include "BurstErrorMessages.h"
@@ -21,14 +19,9 @@
 struct burstLiteralExpressionNode;
 typedef struct burstLiteralExpressionNode
 {
-    // TODO: Value Type
-    
+    // TODO (Giga): Figure out how to accurately represent different datatypes
+    //  within literal expressions.
     char *pValueString;
-    
-    int (*destroy)
-    (
-        struct burstLiteralExpressionNode *pNode
-    );
 } BurstLiteralExpressionNode;
 
 int literal_expression_node_create
